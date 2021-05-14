@@ -1,6 +1,7 @@
 package controllers
 
 
+import models.Vehicle
 import play.api.libs.json.Json
 import play.api.mvc.{BaseController, ControllerComponents}
 import repositories.DataRepository
@@ -14,10 +15,12 @@ class BasicController @Inject()(val controllerComponents: ControllerComponents, 
 
 
   def getOneVehicle(vehicleName: String) = Action { implicit request =>
-    dataRepository.getVehicle(vehicleName) map { vehicle =>
-      // If the post was found, return a 200 with the post data as JSON
-      Ok(Json.toJson(vehicle))
-    } getOrElse NotFound // otherwise, return Not Found
+
+    val vehicle = dataRepository.getVehicle(vehicleName)
+    vehicle match {
+      case Some(Vehicle(wheels, heavy, name)) => Ok(Json.toJson(vehicle.get))
+      case _ => NotFound
+    }
   }
 }
 

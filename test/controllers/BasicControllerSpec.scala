@@ -8,10 +8,12 @@ import org.scalatestplus.mockito.MockitoSugar.mock
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerTest
 import play.api.http.Status
+import play.api.libs.json.{JsObject, Json}
 import play.api.mvc.{ControllerComponents, Result}
 import play.api.test.{FakeRequest, Injecting}
 import repositories.DataRepository
 import play.api.test.Helpers._
+
 import scala.concurrent.{Await, ExecutionContext, Future}
 /**
  * Add your spec here.
@@ -54,9 +56,14 @@ class BasicControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injectin
 
   "return not notFound" when{
 
-    "unknown vehicle" in{
-//      when(mockDataRepository.getVehicle(any[String]))
-//        .thenReturn(dataModel)
+    "unknown vehicle name is submitted" in{
+
+      when(mockDataRepository.getVehicle(any[String]))
+        .thenReturn(None)
+
+      val result = basicTestController.getOneVehicle("0")(FakeRequest())
+      status(result) shouldBe Status.NOT_FOUND
+
 //      val result = basicTestController.getOneVehicle()
 //      status(result) shouldBe Status.NOT_FOUND
     }
