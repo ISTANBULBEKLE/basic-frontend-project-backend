@@ -14,6 +14,7 @@ class DataRepository {
 
   def getVehicle(vehicleName: String): Option[Vehicle] = vehicleOptions.collectFirst {
     case vehicle if vehicle.name == vehicleName => vehicle
+//    case _ => null
   }
 
 }
