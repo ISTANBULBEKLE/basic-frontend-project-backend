@@ -5,7 +5,7 @@ import javax.inject.Singleton
 import models.Vehicle
 
 @Singleton
-class DataRepository {
+class DataRepository  {
 
   val vehicleOptions = Seq(
     Vehicle(wheels = 4, heavy = true, name = "BMW"),
@@ -14,7 +14,6 @@ class DataRepository {
 
   def getVehicle(vehicleName: String): Option[Vehicle] = vehicleOptions.collectFirst {
     case vehicle if vehicle.name == vehicleName => vehicle
-//    case _ => null
   }
 
 }
